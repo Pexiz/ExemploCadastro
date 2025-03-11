@@ -144,6 +144,9 @@ public class  App {
                 JOptionPane.showMessageDialog(null, "Cliente Não encontrado: ", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
         }
         return false;
+
+
+
     }
 
     private static boolean isCadastro(String opcao) {
