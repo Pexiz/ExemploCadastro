@@ -7,14 +7,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ClienteMapDAO implements IClienteDAO {
-    private Map <Integer, Cliente> map;
+    private static ClienteMapDAO instance;
+    private final Map <Integer, Cliente> map;
 
     public ClienteMapDAO()
     {
         this.map = new HashMap<>();
     }
 
-    @Override
+    public static ClienteMapDAO getInstance() {
+        if (instance == null) {
+            instance = new ClienteMapDAO();
+        }
+        return instance;
+    }
+
+        @Override
     public Boolean cadastrar(Cliente cliente) {
      if (this.map.containsKey(cliente.getCpf())) {
          return false;
@@ -22,9 +30,6 @@ public class ClienteMapDAO implements IClienteDAO {
     this.map.put(cliente.getCpf(), cliente);
      return true;
     }
-
-    // se fosse utilizando SET
-    // return this.set.add(cliente) sem verificação pq SET nao deixa repetição de valor
 
     @Override
     public Cliente excluir(Integer cpf) {
@@ -37,16 +42,6 @@ public class ClienteMapDAO implements IClienteDAO {
 
         return clienteCadastrado;
     }
-
-//    Cliente clienteEncontrado= null;
-//    for (Cliente cliente : this.set)
-//    {
-//        if (cliente.getCpf().equals(cpf))
-//        {
-//            clienteencontrado = cliente;
-//            break
-//        }
-//    }
 
     @Override
     public void alterar(Cliente cliente) {
@@ -65,11 +60,10 @@ public class ClienteMapDAO implements IClienteDAO {
     }
 
     @Override
-    public Cliente consultar(int cpf) {
+    public Cliente consultar(Integer cpf) {
 
-        return this.map.get(cpf);
+        return map.get(cpf);
     }
-
 
     @Override
     public Collection<Cliente> buscarTodos() {
